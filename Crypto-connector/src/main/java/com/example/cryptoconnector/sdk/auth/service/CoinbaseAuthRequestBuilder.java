@@ -1,6 +1,6 @@
-package com.example.cryptoconnector.sdk.auth;
+package com.example.cryptoconnector.sdk.auth.service;
 
-import com.example.cryptoconnector.sdk.auth.model.GrantTypeEnum;
+import com.example.cryptoconnector.sdk.auth.model.enums.GrantTypeEnum;
 import com.example.cryptoconnector.sdk.auth.model.properties.CoinbaseApplicationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;

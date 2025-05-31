@@ -1,4 +1,4 @@
-package com.example.cryptoconnector.sdk.auth.login;
+package com.example.cryptoconnector.sdk.auth.web;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

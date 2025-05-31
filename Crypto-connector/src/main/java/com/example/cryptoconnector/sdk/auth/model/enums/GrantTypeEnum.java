@@ -1,4 +1,4 @@
-package com.example.cryptoconnector.sdk.auth.model;
+package com.example.cryptoconnector.sdk.auth.model.enums;
 
 import lombok.Getter;
 

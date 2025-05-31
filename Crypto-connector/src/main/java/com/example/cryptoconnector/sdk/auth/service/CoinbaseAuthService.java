@@ -1,4 +1,4 @@
-package com.example.cryptoconnector.sdk.auth;
+package com.example.cryptoconnector.sdk.auth.service;
 
 import com.example.cryptoconnector.sdk.auth.feign.CoinbaseAuthFeighClient;
 import com.example.cryptoconnector.sdk.auth.model.CoinbaseUserInfo;
@@ -24,7 +24,7 @@ public class CoinbaseAuthService {
         TokenResponse token = coinbaseOAuthFeignClient.exchangeCode(builder.buildAuthCodeRequest(code));
         CoinbaseUserInfo userInfo = coinbaseOAuthFeignClient
                 .getUserInfo(builder.buildBearerHeader(token.accessToken()))
-                .getData()
+                .data()
                 .setAccessToken(token.accessToken())
                 .setRefreshToken(token.refreshToken());
 
@@ -36,7 +36,7 @@ public class CoinbaseAuthService {
         try {
             return coinbaseOAuthFeignClient
                     .getUserInfo(builder.buildBearerHeader(current.getAccessToken()))
-                    .getData();
+                    .data();
         } catch (FeignException.Unauthorized e) {
             return refreshToken(userId, current);
         }
@@ -47,7 +47,7 @@ public class CoinbaseAuthService {
                 builder.buildRefreshRequest(cachedUser.getRefreshToken()));
         CoinbaseUserInfo updated = coinbaseOAuthFeignClient
                 .getUserInfo(builder.buildBearerHeader(refreshed.accessToken()))
-                .getData()
+                .data()
                 .setAccessToken(refreshed.accessToken())
                 .setRefreshToken(refreshed.refreshToken());
         coinbaseClientCached.put(userId, updated);

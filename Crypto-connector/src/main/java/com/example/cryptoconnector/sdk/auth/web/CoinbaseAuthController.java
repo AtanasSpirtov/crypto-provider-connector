@@ -1,6 +1,6 @@
-package com.example.cryptoconnector.sdk.auth.login;
+package com.example.cryptoconnector.sdk.auth.web;
 
-import com.example.cryptoconnector.sdk.auth.CoinbaseAuthService;
+import com.example.cryptoconnector.sdk.auth.service.CoinbaseAuthService;
 import com.example.cryptoconnector.sdk.auth.model.CoinbaseUserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +19,7 @@ public class CoinbaseAuthController {
     }
 
     @GetMapping("/callback")
-    public ResponseEntity<Void> callback(
-            @RequestParam("code") String code,
-            @RequestParam("state") String state,
-            @RequestParam("login_identifier") String loginIdentifier
-    ) {
+    public ResponseEntity<Void> callback(@RequestParam("code") String code) {
         coinbaseAuthService.saveNewClientByCodeInCache(code);
         return ResponseEntity.accepted().build();
     }
