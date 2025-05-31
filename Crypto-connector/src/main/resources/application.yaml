@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: Crypto provider integration
+  cloud:
+    vault:
+      uri: http://localhost:8200
+      token: 00000000-0000-0000-0000-000000000000
+      kv:
+        enabled: true
+        backend: secret
+        default-context: application
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
