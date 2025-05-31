@@ -20,8 +20,9 @@ eureka:
     fetch-registry: true
 
 coinbase:
-  client-id: 'from-vault'
-  client-secret: 'from-vault'
+  client-id: 'not-from-vault'
+  client-secret: 'not-from-vault'
+  redirect-uri: 'not-from-vault'
 
 logging:
   level:
