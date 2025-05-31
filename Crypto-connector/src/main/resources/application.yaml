@@ -1,17 +1,17 @@
 spring:
   application:
-    name: Crypto provider integration
+    name: Crypto application
+  config:
+    import: "vault:"
   cloud:
     vault:
       uri: http://localhost:8200
       token: 00000000-0000-0000-0000-000000000000
       kv:
-        enabled: true
         backend: secret
         default-context: application
+        enabled: true
 
-    config:
-      enabled: false
 eureka:
   client:
     service-url:
@@ -20,4 +20,11 @@ eureka:
     fetch-registry: true
 
 coinbase:
-  key: ${API_KEY}
+  client-id: 'from-vault'
+  client-secret: 'from-vault'
+
+logging:
+  level:
+    org.springframework.vault: DEBUG
+    org.springframework.cloud.vault: DEBUG
+    org.springframework.core.env: DEBUG
