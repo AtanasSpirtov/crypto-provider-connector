@@ -4,17 +4,36 @@ services:
   vault:
     container_name: vault
     image: hashicorp/vault:latest
-    environment:
-      VAULT_DEV_ROOT_TOKEN_ID: "00000000-0000-0000-0000-000000000000"
-      VAULT_DEV_LISTEN_ADDRESS: "0.0.0.0:8200"
     ports:
       - "8200:8200"
     cap_add:
       - IPC_LOCK
-
+    volumes:
+      - vault-data:/vault/file
+    environment:
+      VAULT_LOCAL_CONFIG: |
+        {
+          "storage": {
+            "file": {
+              "path": "/vault/file"
+            }
+          },
+          "listener": {
+            "tcp": {
+              "address": "0.0.0.0:8200",
+              "tls_disable": true
+            }
+          },
+          "ui": true,
+          "default_lease_ttl": "168h",
+          "max_lease_ttl": "720h"
+        }
 
   eureka:
     container_name: eureka
     image: steeltoeoss/eureka-server
     ports:
       - "8761:8761"
+
+volumes:
+  vault-data:

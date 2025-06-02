@@ -41,6 +41,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	implementation("com.coinbase.advanced:coinbase-advanced-sdk-java:0.1.0")
 	implementation("com.coinbase.core:coinbase-core-java:1.0.1")
+	implementation 'io.github.binance:binance-spot:2.0.0'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
