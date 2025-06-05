@@ -1,7 +1,7 @@
 package com.example.cryptoconnector;
 
-import com.example.cryptoconnector.sdk.auth.model.properties.BinanceApplicationProperties;
-import com.example.cryptoconnector.sdk.auth.model.properties.CoinbaseApplicationProperties;
+import com.example.cryptoconnector.sdk.oauth2.model.properties.BinanceApplicationProperties;
+import com.example.cryptoconnector.sdk.oauth2.model.properties.CoinbaseApplicationProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
