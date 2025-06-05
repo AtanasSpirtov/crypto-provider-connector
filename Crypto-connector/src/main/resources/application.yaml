@@ -12,6 +12,25 @@ spring:
         default-context: application
         enabled: true
 
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: consumer_group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      batch-size: 32768
+      linger-ms: 5
+      buffer-memory: 33554432
+      properties:
+        acks: all
+        compression.type: snappy
+        max.request.size: 1048576
+        specific.avro.reader: true
+
 eureka:
   client:
     service-url:
@@ -33,3 +52,8 @@ logging:
     org.springframework.vault: DEBUG
     org.springframework.cloud.vault: DEBUG
     org.springframework.core.env: DEBUG
+
+app:
+  kafka:
+    topics:
+      market-events: market.crypto.binance.stream

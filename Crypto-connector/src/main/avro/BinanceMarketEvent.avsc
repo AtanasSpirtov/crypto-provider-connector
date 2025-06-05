@@ -1,0 +1,11 @@
+{
+  "type": "record",
+  "name": "BinanceMarketEvent",
+  "namespace": "com.example.cryptoconnector.avro",
+  "fields": [
+    { "name": "clientId", "type": "string" },
+    { "name": "symbol", "type": "string" },
+    { "name": "rawJson", "type": "string" },
+    { "name": "timestamp", "type": "long" }
+  ]
+}

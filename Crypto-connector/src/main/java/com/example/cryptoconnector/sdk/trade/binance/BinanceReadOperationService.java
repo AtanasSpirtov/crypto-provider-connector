@@ -3,6 +3,7 @@ package com.example.cryptoconnector.sdk.trade.binance;
 import com.binance.connector.client.impl.WebSocketStreamClientImpl;
 import com.binance.connector.client.utils.WebSocketCallback;
 import com.example.cryptoconnector.sdk.trade.auth.service.CredentialService;
+import com.example.cryptoconnector.sdk.trade.binance.kafka.KafkaProducerService;
 
 import jakarta.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public class BinanceReadOperationService {
 
   private final CredentialService credentialService;
+
+  private final KafkaProducerService kafkaProducerService;
 
   private final Map<String, List<Integer>> activeConnectionStreams = new ConcurrentHashMap<>();
 
@@ -57,7 +60,7 @@ public class BinanceReadOperationService {
 
   private WebSocketCallback sendMessagesToKafka(String clientId, String symbol) {
     return event -> {
-      System.out.printf("[%s] Trade event for %s: %s%n", clientId, symbol, event);
+      kafkaProducerService.sendMessageWithMetadata(clientId, symbol, event);
     };
   }
 }
