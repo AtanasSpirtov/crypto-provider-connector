@@ -1,15 +1,16 @@
 package com.example.cryptoconnector.sdk.trade.auth.model;
 
+import com.example.cryptoconnector.sdk.oauth2.model.enums.Provider;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
-@Data
-public class CoinbaseApiCredentialsRequest {
-    @NotBlank
-    private String apiKey;
+public class CoinbaseApiCredentialsRequest extends ApiCredentialsRequest {
 
-    @NotBlank
-    private String apiSecret;
+  private final String passphrase;
 
-    private String passphrase;
+  public CoinbaseApiCredentialsRequest(@NotBlank String apiKey, @NotBlank String apiSecret, String passphrase) {
+    super(apiKey, apiSecret, Provider.COINBASE);
+    this.passphrase = passphrase;
+  }
 }

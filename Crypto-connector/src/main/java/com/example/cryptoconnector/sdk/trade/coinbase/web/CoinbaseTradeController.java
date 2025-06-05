@@ -1,6 +1,6 @@
-package com.example.cryptoconnector.sdk.trade.read.web;
+package com.example.cryptoconnector.sdk.trade.coinbase.web;
 
-import com.example.cryptoconnector.sdk.trade.read.service.CoinbaseAdvancedTradeApi;
+import com.example.cryptoconnector.sdk.trade.coinbase.service.CoinbaseAdvancedTradeApi;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

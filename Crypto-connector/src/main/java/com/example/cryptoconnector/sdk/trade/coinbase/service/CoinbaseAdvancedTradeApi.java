@@ -1,8 +1,9 @@
-package com.example.cryptoconnector.sdk.trade.read.service;
+package com.example.cryptoconnector.sdk.trade.coinbase.service;
 
 import com.coinbase.advanced.client.CoinbaseAdvancedClient;
 import com.coinbase.advanced.credentials.CoinbaseAdvancedCredentials;
-import com.example.cryptoconnector.sdk.trade.auth.service.CoinbaseCredentialService;
+import com.example.cryptoconnector.sdk.oauth2.model.enums.Provider;
+import com.example.cryptoconnector.sdk.trade.auth.service.CredentialService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.RequiredArgsConstructor;
@@ -15,10 +16,10 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CoinbaseAdvancedTradeApi {
 
-    private final CoinbaseCredentialService credentialService;
+    private final CredentialService credentialService;
 
     private CoinbaseAdvancedClient coinbaseAdvancedClient(String clientId) throws JsonProcessingException {
-        Map<String, String> credentialsFromVaultSerialized = credentialService.getClientSecrets(clientId);
+        Map<String, String> credentialsFromVaultSerialized = credentialService.getClientSecrets(clientId, Provider.COINBASE);
         String apiKey = credentialsFromVaultSerialized.get("apiKey");
         String privateKey = credentialsFromVaultSerialized.get("apiSecret");
 
