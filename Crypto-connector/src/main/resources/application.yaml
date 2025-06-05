@@ -23,6 +23,10 @@ coinbase:
   client-id: 'not-from-vault'
   client-secret: 'not-from-vault'
   redirect-uri: 'not-from-vault'
+binance:
+  client-id: 'not-from-vault'
+  client-secret: 'not-from-vault'
+  redirect-uri: 'not-from-vault'
 
 logging:
   level:

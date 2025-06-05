@@ -5,7 +5,7 @@ services:
     container_name: vault
     image: hashicorp/vault:latest
     ports:
-      - "8200:8200"
+      - "18200:18200"
     cap_add:
       - IPC_LOCK
     volumes:
@@ -20,7 +20,7 @@ services:
           },
           "listener": {
             "tcp": {
-              "address": "0.0.0.0:8200",
+              "address": "0.0.0.0:18200",
               "tls_disable": true
             }
           },
