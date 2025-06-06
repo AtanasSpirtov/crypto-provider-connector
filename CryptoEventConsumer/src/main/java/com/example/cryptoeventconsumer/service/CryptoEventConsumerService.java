@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.support.Acknowledgment;
-import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.stereotype.Service;
 
@@ -25,14 +25,14 @@ public class CryptoEventConsumerService {
     private final CryptoEventProcessingService processingService;
 
     @KafkaListener(
-        topics = "#{kafkaProperties.topics.marketEvents}",
+        topics = "market.crypto.binance.stream",
         containerFactory = "binanceEventKafkaListenerContainerFactory",
         groupId = "binance-consumer-group"
     )
     @CircuitBreaker(name = "kafka-consumer", fallbackMethod = "fallbackProcessEvents")
     public void consumeBinanceMarketEvents(
             @Payload List<BinanceMarketEvent> events,
-            @Header Map<String, Object> headers,
+            @Headers Map<String, Object> headers,
             Acknowledgment acknowledgment) {
         
         log.info("Received batch of {} Binance market events", events.size());

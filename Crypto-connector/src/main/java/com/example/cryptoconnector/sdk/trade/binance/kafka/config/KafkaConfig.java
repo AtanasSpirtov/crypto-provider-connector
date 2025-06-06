@@ -1,5 +1,6 @@
 package com.example.cryptoconnector.sdk.trade.binance.kafka.config;
 
+import com.example.cryptoconnector.avro.BinanceMarketEvent;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -16,8 +17,8 @@ import java.util.Map;
 @EnableKafka
 public class KafkaConfig {
 
-  private static final String BOOTSTRAP_SERVERS = "localhost:9092"; // <-- Kafka broker
-  private static final String SCHEMA_REGISTRY_URL = "http://localhost:8081"; // <-- Confluent Schema Registry
+  private static final String BOOTSTRAP_SERVERS = "localhost:9092"; //  Kafka broker
+  private static final String SCHEMA_REGISTRY_URL = "http://localhost:8081"; // Confluent Schema Registry
 
   @Bean
   public Map<String, Object> producerConfigs() {
@@ -45,12 +46,12 @@ public class KafkaConfig {
   }
 
   @Bean
-  public ProducerFactory<String, Object> producerFactory() {
+  public ProducerFactory<String, BinanceMarketEvent> producerFactory() {
     return new DefaultKafkaProducerFactory<>(producerConfigs());
   }
 
   @Bean
-  public KafkaTemplate<String, Object> kafkaTemplate() {
+  public KafkaTemplate<String, BinanceMarketEvent> kafkaTemplate() {
     return new KafkaTemplate<>(producerFactory());
   }
 }

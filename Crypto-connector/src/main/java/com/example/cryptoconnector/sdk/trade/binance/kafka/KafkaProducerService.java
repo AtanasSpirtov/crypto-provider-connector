@@ -27,6 +27,7 @@ public class KafkaProducerService {
         clientId,
         event);
     record.headers().add(new RecordHeader("symbol", symbol.getBytes(StandardCharsets.UTF_8)));
+    System.out.println(record);
     kafkaTemplate.send(record);
   }
 }
