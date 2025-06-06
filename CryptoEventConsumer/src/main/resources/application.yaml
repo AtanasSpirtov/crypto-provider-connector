@@ -1,0 +1,81 @@
+spring:
+  application:
+    name: CryptoEventConsumer
+  config:
+    import: "vault:"
+  cloud:
+    vault:
+      uri: http://localhost:8200
+      token: 00000000-0000-0000-0000-000000000000
+      kv:
+        backend: secret
+        default-context: application
+        enabled: true
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: crypto-event-consumer-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      properties:
+        specific.avro.reader: true
+        schema.registry.url: http://localhost:8081
+        auto.register.schemas: false
+        use.latest.version: true
+      enable-auto-commit: false
+      isolation-level: read_committed
+
+# Netty server configuration (WebFlux uses Netty by default)
+server:
+  port: 8082
+  netty:
+    connection-timeout: 2s
+    h2c-max-content-length: 0B
+    initial-buffer-size: 128B
+    max-chunk-size: 8KB
+    max-initial-line-length: 4KB
+    validate-headers: true
+
+# Eureka client configuration
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+# Kafka topics configuration
+app:
+  kafka:
+    topics:
+      market-events: market.crypto.binance.stream
+    consumer:
+      batch-size: 100
+      poll-timeout: 1000
+
+# Resilience4j configuration for fault tolerance
+resilience4j:
+  circuitbreaker:
+    instances:
+      kafka-consumer:
+        registerHealthIndicator: true
+        slidingWindowType: COUNT_BASED
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 30s
+        permittedNumberOfCallsInHalfOpenState: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
+# Logging configuration
+logging:
+  level:
+    org.springframework.vault: DEBUG
+    org.springframework.cloud.vault: DEBUG
+    org.springframework.kafka: INFO
+    org.apache.kafka: WARN
+    com.example.cryptoeventconsumer: DEBUG
