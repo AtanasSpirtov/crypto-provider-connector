@@ -1,4 +1,4 @@
-package com.example.cryptoconnector.sdk.trade.shared;
+package com.example.cryptoconnector.sdk.trade.shared.vault;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

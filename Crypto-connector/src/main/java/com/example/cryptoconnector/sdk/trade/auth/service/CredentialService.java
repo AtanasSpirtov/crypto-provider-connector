@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.example.cryptoconnector.sdk.oauth2.model.enums.Provider;
-import com.example.cryptoconnector.sdk.trade.shared.ClientSecretEncryptionService;
+import com.example.cryptoconnector.sdk.trade.shared.vault.ClientSecretEncryptionService;
 
 @Service
 @RequiredArgsConstructor

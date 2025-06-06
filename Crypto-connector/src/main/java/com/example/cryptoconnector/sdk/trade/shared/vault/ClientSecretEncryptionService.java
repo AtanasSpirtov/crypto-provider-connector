@@ -1,4 +1,4 @@
-package com.example.cryptoconnector.sdk.trade.shared;
+package com.example.cryptoconnector.sdk.trade.shared.vault;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

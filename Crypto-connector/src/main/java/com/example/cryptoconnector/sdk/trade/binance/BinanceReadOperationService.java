@@ -1,5 +1,6 @@
 package com.example.cryptoconnector.sdk.trade.binance;
 
+import com.binance.connector.client.WebSocketStreamClient;
 import com.binance.connector.client.impl.WebSocketStreamClientImpl;
 import com.binance.connector.client.utils.WebSocketCallback;
 import com.example.cryptoconnector.sdk.trade.auth.service.CredentialService;
@@ -17,25 +18,23 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class BinanceReadOperationService {
 
-  private final CredentialService credentialService;
-
   private final KafkaProducerService kafkaProducerService;
 
   private final Map<String, List<Integer>> activeConnectionStreams = new ConcurrentHashMap<>();
 
-  private final WebSocketStreamClientImpl binanceClient = new WebSocketStreamClientImpl();
+  private final WebSocketStreamClient binanceClient = new WebSocketStreamClientImpl();
+
+  private final BinanceClientWrapper binanceClientWrapper;
 
   public ResponseResult streamMarketDataForClient(String clientId, List<String> pairs) {
     if (activeConnectionStreams.containsKey(clientId)) {
       return new ResponseResult("Client already has active streams.");
     }
 
-    List<Integer> connectionIds = new ArrayList<>();
-
-    pairs.forEach(pair -> {
-      int id = binanceClient.tradeStream(pair.toLowerCase(), sendMessagesToKafka(clientId, pair.toLowerCase()));
-      connectionIds.add(id);
-    });
+    List<Integer> connectionIds = pairs.stream().map(pair ->
+      binanceClientWrapper.callWithCircuitBreaker(() ->
+          binanceClient.tradeStream(pair.toLowerCase(), sendMessagesToKafka(clientId, pair.toLowerCase()))
+    )).toList();
 
     activeConnectionStreams.put(clientId, connectionIds);
     return new ResponseResult(String.format("Market stream started for client: %s", clientId));
@@ -59,8 +58,6 @@ public class BinanceReadOperationService {
   }
 
   private WebSocketCallback sendMessagesToKafka(String clientId, String symbol) {
-    return event -> {
-      kafkaProducerService.sendMessageWithMetadata(clientId, symbol, event);
-    };
+    return event -> kafkaProducerService.sendMessageWithMetadata(clientId, symbol, event);
   }
 }
