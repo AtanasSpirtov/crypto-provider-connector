@@ -12,31 +12,6 @@ spring:
         default-context: application
         enabled: true
 
-  kafka:
-    bootstrap-servers: localhost:9092
-    consumer:
-      group-id: consumer_group
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      batch-size: 32768
-      linger-ms: 5
-      buffer-memory: 33554432
-      retries: 1
-      retry-backoff-ms: 1000
-      acks: all
-      delivery-timeout-ms: 3000
-      request-timeout-ms: 2000
-      max-block-ms: 1000
-      properties:
-        acks: all
-        compression.type: snappy
-        max.request.size: 1048576
-        specific.avro.reader: true
-
 eureka:
   client:
     service-url:
